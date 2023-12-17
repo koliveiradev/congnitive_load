@@ -16,6 +16,25 @@ class _CongnitiveChartState extends State<CongnitiveChart> {
   double start = 0;
   late double maxWidth;
   CongnitiveLoad load = CongnitiveLoad.lfhfratio;
+  final ScrollController controller = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      setState(() {
+        double delta = controller.offset - start;
+        start = controller.offset;
+
+        percent -= delta / maxWidth;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,6 +212,7 @@ class _CongnitiveChartState extends State<CongnitiveChart> {
                               return Stack(
                                 children: [
                                   ListView.separated(
+                                    controller: controller,
                                     physics: const ClampingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemCount: widget.data.phases.length,
@@ -409,31 +429,6 @@ class SurgicalPhaseSection extends StatelessWidget {
                       width: double.minPositive,
                       height: double.maxFinite,
                     )),
-                Row(
-                  children: List.generate(
-                    phase.entries.length,
-                    (index) {
-                      if (notes.any((e) => e.timestamp / interval == index)) {
-                        final note = notes
-                            .firstWhere((e) => e.timestamp / interval == index);
-                        return Column(
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                              width: 30,
-                            ),
-                            Expanded(
-                                child: VerticalDivider(
-                              color: note.type.color,
-                              thickness: 2,
-                            ))
-                          ],
-                        );
-                      }
-                      return const SizedBox(width: width);
-                    },
-                  ),
-                ),
               ],
             ),
           ),
