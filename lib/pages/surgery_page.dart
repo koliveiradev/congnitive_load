@@ -1,3 +1,4 @@
+import 'package:cognitive_load_guidance/mock/surgeries.dart';
 import 'package:cognitive_load_guidance/models/surgery.dart';
 import 'package:cognitive_load_guidance/pages/cognitive_page.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:intl/intl.dart';
 
 class SurgeriesPage extends StatelessWidget {
   SurgeriesPage({super.key});
-  final List<SurgeryData> surgeries = [];
+  final List<SurgeryData> surgeries = Mock.values;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
