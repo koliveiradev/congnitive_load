@@ -1,4 +1,37 @@
+# Cognitive Load Guidance
 
+
+## Purpose
+The application aims to enhance clincian training by providing teams with information on cognitive load and timing during surgeries to better access clincians and knowing what should be their typical supervision level. 
+
+## Definitions
+- **Cardiac Surgeries Modeled**: Aortic Valve Replacement (AVR) and Coronary Artery Bypass Grafting (CABG).
+- **Surgery Phases**: Defined stages from patient arrival to departure.
+- **Process Execution Events**: Detailed steps corresponding to surgery phases.
+
+## Current Focus
+- **Phase 12 - Separate from bypass**: A critical phase consisting of substeps impacting patient safety.
+
+## Teams and Parameters
+- **Specialty Teams**: Anes (Anesthesia), Nurs (Nursing), Perf (Perfusion), Surg (Surgery).
+- **HRV Parameters of Interest**: Linked to cognitive load assessment.
+
+## Functional Requirements
+- Collect cognitive load data via OpenICE API.
+- Display real-time surgery phase and operation timelapse.
+- Integrate data for comprehensive team status overview.
+- Provide Smart Checklist instructions for each team.
+- Ensure easy navigation within a unified dashboard.
+
+## Non-Functional Requirements
+- **Security and Privacy**: Stringent data protection measures.
+- **Reliability and Availability**: Backup system for uninterrupted availability.
+- **Scalability**: Ability to handle numerous users and real-time updates.
+- **Usability**: Quick, straightforward access amid complex scenarios.
+- **Performance**: Swift information retrieval even under heavy load.
+- **Maintainability**: Well-documented, easily updatable design.
+
+This application addresses critical communication challenges in the OR, aiming to foster a safer environment through improved coordination and reduced cognitive load for healthcare teams.
 
 ### 1. Install Flutter
 
