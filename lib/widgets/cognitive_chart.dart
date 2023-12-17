@@ -1,6 +1,8 @@
+import 'package:cognitive_load_guidance/main.dart';
 import 'package:cognitive_load_guidance/models/cognitive_entry.dart';
 import 'package:cognitive_load_guidance/models/surgery.dart';
 import 'package:cognitive_load_guidance/util/duration.dart';
+import 'package:cognitive_load_guidance/widgets/note_dialog.dart';
 import 'package:flutter/material.dart';
 
 class CongnitiveChart extends StatefulWidget {
@@ -297,6 +299,28 @@ class _CongnitiveChartState extends State<CongnitiveChart> {
                                                 ),
                                               ),
                                             ),
+                                            Align(
+                                              alignment: Alignment.bottomLeft,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 12, bottom: 12),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        36))),
+                                                    onPressed: () async {
+                                                      await showDialog(
+                                                          context: context,
+                                                          builder: (_) =>
+                                                              const NoteDialog());
+                                                    },
+                                                    child:
+                                                        const Text('+ Note')),
+                                              ),
+                                            ),
                                           ],
                                         ))
                                       ],
@@ -429,6 +453,57 @@ class SurgicalPhaseSection extends StatelessWidget {
                       width: double.minPositive,
                       height: double.maxFinite,
                     )),
+                Row(
+                  children: List.generate(
+                    phase.entries.length,
+                    (index) {
+                      if (notes.any((e) => e.timestamp / interval == index)) {
+                        final note = notes
+                            .firstWhere((e) => e.timestamp / interval == index);
+                        return Column(
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                              width: 30,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (_) =>
+                                        NoteEditDialog(marker: note));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              note.type.color.withOpacity(0.12),
+                                          blurRadius: 4,
+                                          offset: const Offset(0, 2))
+                                    ],
+                                    border: Border.all(
+                                        color: note.type.color, width: 1)),
+                                height: 40,
+                                width: 40,
+                                child: Icon(note.type.icon,
+                                    color: note.type.color),
+                              ),
+                            ),
+                            Expanded(
+                                child: VerticalDivider(
+                              color: note.type.color,
+                              thickness: 2,
+                            ))
+                          ],
+                        );
+                      }
+                      return const SizedBox(width: width);
+                    },
+                  ),
+                ),
               ],
             ),
           ),
